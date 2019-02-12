@@ -22,7 +22,7 @@ public class LerpCubeScript : MonoBehaviour {
         {
             t += Time.deltaTime;
             Debug.Log(t);
-            _cube.transform.position = Vector3.Lerp(_leftPosition, _rightPosition, t);
+            _cube.transform.position = SmoothStopLerp(_leftPosition, _rightPosition, t);
             if(t >=1)
             {
                 _cube.transform.position = _rightPosition;
@@ -31,7 +31,25 @@ public class LerpCubeScript : MonoBehaviour {
         }
     }
 
-    //inseert code here:
+    //insert code here:
+
+    Vector3 SmoothStartLerp(Vector3 a, Vector3 b, float t)
+    {
+        float x = a.x + (b.x - a.x) * t * t;
+        float y = a.y + (b.y - a.y) * t * t;
+        float z = a.z + (b.z - a.z) * t * t;
+
+        return new Vector3(x, y, z);
+    }
+
+    Vector3 SmoothStopLerp(Vector3 a, Vector3 b, float t)
+    {
+        float x = a.x + (b.x - a.x) * (1 - (1 - t) * (1 - t));
+        float y = a.y + (b.y - a.y) * (1 - (1 - t) * (1 - t));
+        float z = a.z + (b.z - a.z) * (1 - (1 - t) * (1 - t));
+
+        return new Vector3(x, y, z);
+    }
 
     public void PrintDebugScript()
     {
@@ -46,5 +64,6 @@ public class LerpCubeScript : MonoBehaviour {
         + "Left Position = " + _leftPosition + "\n"
         + "Right Position = " + _rightPosition;
         return s;
-    }
+    }
+
 }
