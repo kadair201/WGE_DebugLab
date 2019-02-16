@@ -11,10 +11,10 @@ public class LerpCubeScript : MonoBehaviour {
     public void StartLerp()
     {
         _cube.transform.position = _leftPosition;
-        StartCoroutine(LerpCube());
+        StartCoroutine(LerpCube(_leftPosition, _rightPosition));
     }
 
-    IEnumerator LerpCube()
+    IEnumerator LerpCube(Vector3 a, Vector3 b)
     {
         float t = 0;
 
@@ -22,7 +22,7 @@ public class LerpCubeScript : MonoBehaviour {
         {
             t += Time.deltaTime;
             Debug.Log(t);
-            _cube.transform.position = SmoothStopLerp(_leftPosition, _rightPosition, t);
+            _cube.transform.position = Vector3.Lerp(SmoothStartLerp(a, b, t), SmoothStopLerp(a, b, t), t);
             if(t >=1)
             {
                 _cube.transform.position = _rightPosition;
@@ -53,7 +53,7 @@ public class LerpCubeScript : MonoBehaviour {
 
     public void PrintDebugScript()
     {
-        Debug.Log(this.ToString());
+        //Debug.Log(this.ToString());
     }
 
     public override string ToString()
